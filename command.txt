@@ -1,0 +1,3 @@
+Force refresh of character animation files, run in cmd:
+
+"D:Games\Steam\steamapps\common\Don't Starve Mod Tools\mod_tools\scml.exe" "D:Games\Steam\steamapps\common\dont_starve\mods\MightyNein\exported\jester\jester.scml" "D:Games\Steam\steamapps\common\dont_starve\mods\MightyNein"
