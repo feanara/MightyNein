@@ -11,11 +11,13 @@ Beau - the expositor
  - hits hard
  - hungers quickly
 
+
 Caduceus - the maker of fine graves
  - "That's really great."
  - loves mushrooms
  - no sanity loss when around death
  - vegetarian
+
 
 Caleb - the zemnian
  - "Leave me alone, I'm reading."
@@ -23,11 +25,13 @@ Caleb - the zemnian
  - doesn't hit hard
  - sanity loss when starting fire
 
+
 Fjord - the captain
  - "Eldritch blast."
  - water resistant
  - afraid of darkness/ghost...sleeping has chance of sanity hit
  - falchion? Uk'otoa?
+
 
 Jester - the little sapphire
  - "Have you heard of the Traveller?"
@@ -35,17 +39,20 @@ Jester - the little sapphire
  - health multiplier on sweet foods
  - sanity hit when killing neutral prey mobs
 
+
 Molly - the fabulous fool
  - "May I reign forever!"
  - reckless, unafraid
  - blood sword
  - loses health with each hit (with blood sword)
 
+
 Nott - the brave
  - "There's no comma."
  - bottomless flask (gain sanity, lose health)
  - monsters are neutral like webber
  - low max sanity
+
 
 Yasha - the orphanmaker
  - "I'm learning how to people."
