@@ -345,17 +345,17 @@
             </timeline>
             <timeline id="16" name="hand_1_16">
                 <key id="0" spin="0">
-                    <object folder="5" file="1" x="-233.8125" y="104.599" angle="99.433899" scale_x="0.993478" scale_y="0.993478"/>
+                    <object folder="5" file="1" x="-244.8125" y="94.599" angle="99.433899" scale_x="0.993478" scale_y="0.993478"/>
                 </key>
             </timeline>
             <timeline id="17" name="arm_upper_1_17">
                 <key id="0" spin="0">
-                    <object folder="8" file="1" x="-304.5625" y="106.549" angle="61.016408" scale_x="0.995619" scale_y="0.995619"/>
+                    <object folder="8" file="1" x="-310.5625" y="104.549" angle="61.016408" scale_x="0.995619" scale_y="0.995619"/>
                 </key>
             </timeline>
             <timeline id="18" name="arm_lower_1_18">
                 <key id="0" spin="0">
-                    <object folder="7" file="1" x="-272.9125" y="89.899" angle="108.584025" scale_x="0.993629" scale_y="0.993629"/>
+                    <object folder="7" file="1" x="-283.9125" y="79.899" angle="108.584025" scale_x="0.993629" scale_y="0.993629"/>
                 </key>
             </timeline>
             <timeline id="19" name="hair_hat_2_19">
