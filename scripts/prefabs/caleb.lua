@@ -27,19 +27,22 @@ local assets = {
         Asset( "ANIM", "anim/shadow_hands.zip" ),
         Asset( "SOUND", "sound/sfx.fsb" ),
         Asset( "SOUND", "sound/wilson.fsb" ),
-		--Asset( "ATLAS", "images/inventoryimages/scroll_dancinglights.xml" ),
+		Asset( "IMAGE", "images/inventoryimages/scroll_lights.tex" ),
+		Asset( "ATLAS", "images/inventoryimages/scroll_lights.xml" ),
 
         Asset( "ANIM", "anim/caleb.zip" ),
 }
 local prefabs = 
 {
-	--"/inventory/scroll_magearmor",
+	"inventory/scroll_lights",
 }
 
 local start_inv = 
 {
-	--"papyrus",
-	--"papyrus"
+	"papyrus",
+	"papyrus",
+	"fireflies",
+	"fireflies"
 }
 
 local fn = function(inst)
@@ -67,34 +70,31 @@ local fn = function(inst)
 	inst.components.locomotor.runspeed = 6
 	
 	-- SPELLS
-	--local scroll_dancinglights = Recipe("scroll_dancinglights", 
-	--{
-	--	Ingredient("papyrus", 2), 
-	--	Ingredient("fireflies", 2)
-	--}, 
-	--GLOBAL.RECIPETABS.MAGIC, { MAGIC = 0 })
-	--
-	--local scroll_magearmor = Recipe("scroll_magearmor", 
+	inst:AddComponent("reader")
+
+	local scroll = Recipe("scroll_lights", 
+	{
+		Ingredient("papyrus", 2), 
+		Ingredient("fireflies", 2)
+	}, RECIPETABS.MAGIC, TECH.NONE)
+	inst.components.builder:AddRecipe("scroll_lights")
+	scroll.atlas = "images/inventoryimages/scroll_lights.xml"
+
+	--scroll = Recipe("scroll_fire", 
 	--{
 	--	Ingredient("papyrus", 2), 
 	--	Ingredient("ice", 2)
-	--}, 
-	--GLOBAL.RECIPETABS.MAGIC, { MAGIC = 2 })
-	--
-	--local scroll_firebolt = Recipe("scroll_firebolt", 
+	--}, GLOBAL.RECIPETABS.MAGIC, TECH.MAGIC_TWO)
+	--inst.components.builder:AddRecipe("scroll_fire")
+	--scroll.atlas = "images/inventoryimages/scroll_fire.xml"
+
+	--scroll = Recipe("scroll_armor", 
 	--{
 	--	Ingredient("papyrus", 2), 
 	--	Ingredient("redgem", 1)
-	--}, 
-	--GLOBAL.RECIPETABS.MAGIC, {MAGIC = 3})
-	--
-	--inst.components.builder:AddRecipe("scroll_dancinglights")
-	--inst.components.builder:AddRecipe("scroll_magearmor")
-	--inst.components.builder:AddRecipe("scroll_firebolt")
-	--
-	--scroll_dancinglights.atlas = "images/inventoryimages/scroll_dancinglights.xml"
-	--scroll_magearmor.atlas = "images/inventoryimages/scroll_magearmor.xml"
-	--scroll_firebolt.atlas = "images/inventoryimages/scroll_firebolt.xml"
+	--}, GLOBAL.RECIPETABS.MAGIC, TECH.MAGIC_THREE)
+	--inst.components.builder:AddRecipe("scroll_armor")
+	--scroll.atlas = "images/inventoryimages/scroll_armor.xml"
 
 	-- TODO FIRE
 	--inst:ListenForEvent( "killed", function(it, data)

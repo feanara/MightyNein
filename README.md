@@ -29,7 +29,7 @@ Caleb - the zemnian
 Fjord - the captain
  - "Eldritch blast."
  - water resistant
- - afraid of darkness/ghost...sleeping has chance of sanity hit
+ - afraid of darkness/ghost...sleeping causes a sanity hit
  - falchion? Uk'otoa?
 
 
@@ -48,7 +48,7 @@ Molly - the fabulous fool
 
 
 Nott - the brave
- - "There's no comma."
+ - "You can reply to this message."
  - bottomless flask (gain sanity, lose health)
  - monsters are neutral like webber
  - low max sanity

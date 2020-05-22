@@ -28,24 +28,25 @@ local assets = {
         Asset( "ANIM", "anim/shadow_hands.zip" ),
         Asset( "SOUND", "sound/sfx.fsb" ),
         Asset( "SOUND", "sound/wilson.fsb" ),
+        Asset( "ANIM", "anim/beard.zip" ),
 
         Asset( "ANIM", "anim/nott.zip" ),
 }
 local prefabs = 
 {
-	--"inventory/bottomless_flask"
+	"inventory/flask"
 }
 
 -- FLASK
 local start_inv = 
 {
-	--"bottomless_flask"
+	"flask"
 }
 
 local fn = function(inst)
 	
 	-- choose which sounds this character will play
-	inst.soundsname = "wickerbottom"
+	inst.soundsname = "webber"
 
 	-- Minimap icon
 	inst.MiniMapEntity:SetIcon( "nott.tex" )

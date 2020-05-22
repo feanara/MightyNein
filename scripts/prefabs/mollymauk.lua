@@ -45,7 +45,7 @@ local start_inv =
 local fn = function(inst)
 	
 	-- choose which sounds this character will play
-	inst.soundsname = "willow"
+	inst.soundsname = "woodie"
 
 	-- Minimap icon
 	inst.MiniMapEntity:SetIcon( "mollymauk.tex" )
@@ -66,6 +66,7 @@ local fn = function(inst)
 	inst.components.locomotor.runspeed = 6
 	
 	-- TODO blood sword that lowers sanity
+	-- Dapperness
 end
 
 return MakePlayerCharacter("mollymauk", prefabs, assets, fn, start_inv)

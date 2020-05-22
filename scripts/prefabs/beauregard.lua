@@ -56,11 +56,11 @@ local fn = function(inst)
 	
 	-- HITS HARD
 	-- Damage multiplier (optional)
-    inst.components.combat.damagemultiplier = 1.5
+    inst.components.combat.damagemultiplier = 1.25
 	
 	--GETS HUNGRY
 	-- Hunger rate (optional)
-	inst.components.hunger.hungerrate = 1.5 * TUNING.WILSON_HUNGER_RATE
+	inst.components.hunger.hungerrate = 1.25 * TUNING.WILSON_HUNGER_RATE
 
 	-- FAST
 	-- Movement speed (optional)

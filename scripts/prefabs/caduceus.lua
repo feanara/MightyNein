@@ -37,9 +37,10 @@ local prefabs = {}
 
 local start_inv = {}
 
-local function fnWorkFinished(inst, data)
-	if data.target and data.target.components.workable and data.target.components.workable.action == ACTIONS.DIG and data.target.prefab == "mound"
-	then worker.components.sanity.ignore = true
+local function fnWorking(inst, data)
+	if data.target and data.target.prefab == "mound"
+	and data.target.components.workable.action == ACTIONS.DIG
+	then inst.components.sanity.ignore = true
 	end
 end
 
@@ -63,14 +64,14 @@ local fn = function(inst)
 	inst.components.hunger.hungerrate = 1 * TUNING.WILSON_HUNGER_RATE
 
 	-- IS A VEGETARIAN
-	inst.components.eater.SetVegetarian()
+	inst.components.eater:SetVegetarian()
 
 	-- Movement speed (optional)
 	inst.components.locomotor.walkspeed = 4
 	inst.components.locomotor.runspeed = 6
 	
 	-- NO FEAR OF DEATH
-	inst:ListenForEvent("finishedwork", fnWorkFinished)
+	inst:ListenForEvent("working", fnWorking)
 	inst.components.sanity.neg_aura_mult = 0
 	
 	-- NO MUSHROOM LOSSES

@@ -6,7 +6,7 @@ PrefabFiles = {
 	"beauregard",
 	"caduceus",
 	"caleb",
-	--"inventory/scroll_magearmor",
+	"inventory/scroll_lights",
 
 	"fjord",
 	"jester",
@@ -14,6 +14,8 @@ PrefabFiles = {
 
 	"mollymauk",
 	"nott",
+	"inventory/flask",
+	
 	"yasha",
 }
 
@@ -109,50 +111,119 @@ local Ingredient = GLOBAL.Ingredient
 local RECIPETABS = GLOBAL.RECIPETABS
 local STRINGS = GLOBAL.STRINGS
 local TECH = GLOBAL.TECH
+local State = GLOBAL.State
+local TimeEvent = GLOBAL.TimeEvent
+local EventHandler = GLOBAL.EventHandler
+local FRAMES = GLOBAL.FRAMES
 
+-- ACTIONS--
+GLOBAL.ACTIONS.DRINK = GLOBAL.Action({mount_enabled=true})
+GLOBAL.ACTIONS.DRINK.id = "DRINK"
+GLOBAL.ACTIONS.DRINK.str = "Drink"
+GLOBAL.ACTIONS.DRINK.fn = function(act)
+    local obj = act.target or act.invobject
+    if act.doer.components.eater and obj and obj.components.edible then
+    	return act.doer.components.eater:Eat(obj) 
+    end
+end
+AddAction(GLOBAL.ACTIONS.DRINK)
+
+local newquickeat = State({
+        name = "quickeat",
+        tags ={"busy"},
+        onenter = function(inst)
+            inst.components.locomotor:Stop()
+            local is_gear = inst:GetBufferedAction() and inst:GetBufferedAction().invobject and inst:GetBufferedAction().invobject.components.edible and inst:GetBufferedAction().invobject.components.edible.foodtype == "GEARS"
+            local is_flask = inst:GetBufferedAction() and inst:GetBufferedAction().invobject and inst:GetBufferedAction().invobject.components.edible and inst:GetBufferedAction().invobject:HasTag("flask")
+			if not (is_gear or is_flask) then
+                inst.SoundEmitter:PlaySound("dontstarve/wilson/eat", "eating")    
+            end
+			if is_flask then
+				inst.AnimState:PlayAnimation("horn")
+				inst.AnimState:Show("ARM_normal")
+
+			else
+				inst.AnimState:PlayAnimation("quick_eat")
+			end
+            inst.components.hunger:Pause()
+        end,
+
+        timeline=
+        {
+            TimeEvent(12*FRAMES, function(inst) 
+                inst:PerformBufferedAction() 
+                inst.sg:RemoveStateTag("busy")
+            end),
+        },        
+        
+        events=
+        {
+            EventHandler("animover", function(inst) inst.sg:GoToState("idle") end),
+        },
+        
+        onexit= function(inst)
+            if inst.components.inventory:GetEquippedItem(GLOBAL.EQUIPSLOTS.HANDS) then
+                inst.AnimState:Show("ARM_carry") 
+                inst.AnimState:Hide("ARM_normal")
+            end
+			
+            inst.SoundEmitter:KillSound("eating")    
+            inst.components.hunger:Resume()
+        end,
+})
+AddStategraphState("wilson", newquickeat)
+
+--INVENTORY--
 GLOBAL.STRINGS.NAMES.LOLLIPOP = "Lollipop"
 GLOBAL.STRINGS.RECIPE_DESC.LOLLIPOP = "Deliciously dangerous."
 GLOBAL.STRINGS.CHARACTERS.GENERIC.DESCRIBE.LOLLIPOP = "Sweet and deadly...just like me!"
 
--- The character select screen lines
+GLOBAL.STRINGS.NAMES.SCROLL_LIGHTS = "Dancing Lights Spell"
+GLOBAL.STRINGS.RECIPE_DESC.SCROLL_LIGHTS = "Little baby fireflies."
+GLOBAL.STRINGS.CHARACTERS.GENERIC.DESCRIBE.SCROLL_LIGHTS = "So nice and glowy."
+
+GLOBAL.STRINGS.NAMES.FLASK = "Bottomless Flask"
+GLOBAL.STRINGS.CHARACTERS.GENERIC.DESCRIBE.FLASK = "That's some strong stuff."
+
+--CHARACTERS--
 GLOBAL.STRINGS.CHARACTER_TITLES.beauregard = "The Expositor"
 GLOBAL.STRINGS.CHARACTER_NAMES.beauregard = "Esc"
-GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.beauregard = "*Walks fast\n*Hits hard\n*Hungry for pocket bacon"
+GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.beauregard = "*Walks fast\n*Hits hard\n*Always hungry for pocket bacon"
 GLOBAL.STRINGS.CHARACTER_QUOTES.beauregard = "\"Pop pop!\""
 
-GLOBAL.STRINGS.CHARACTER_TITLES.caduceus = "Maker of Fine Graves"
+GLOBAL.STRINGS.CHARACTER_TITLES.caduceus = "The Maker of Fine Graves"
 GLOBAL.STRINGS.CHARACTER_NAMES.caduceus = "Esc"
-GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.caduceus = "*Vegetarian\n*Loves mushrooms\n*Isn't scared of death"
+GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.caduceus = "*Vegetarian\n*Loves mushrooms\n*Doesn't spook easily"
 GLOBAL.STRINGS.CHARACTER_QUOTES.caduceus = "\"That's really great.\""
 
 GLOBAL.STRINGS.CHARACTER_TITLES.caleb = "The Zemnian"
 GLOBAL.STRINGS.CHARACTER_NAMES.caleb = "Esc"
-GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.caleb = "*Knows magic spells\n*Doesn't like killing with fire\n*Is squishy"
+GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.caleb = "*Knows magic spells\n*Doesn't like starting fires\n*Is squishy"
 GLOBAL.STRINGS.CHARACTER_QUOTES.caleb = "\"Leave me alone, I'm reading.\""
 
 GLOBAL.STRINGS.CHARACTER_TITLES.fjord = "The Captain"
 GLOBAL.STRINGS.CHARACTER_NAMES.fjord = "Esc"
-GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.fjord = "*Vegetarian\n*Loves mushrooms\n*Isn't scared of death"
+GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.fjord = "*Doesn't like spooky things\n*Loves getting caught in the rain\n*Has a falchion?"
 GLOBAL.STRINGS.CHARACTER_QUOTES.fjord = "\"Eldritch blast.\""
 
 GLOBAL.STRINGS.CHARACTER_TITLES.jester = "The Little Sapphire"
 GLOBAL.STRINGS.CHARACTER_NAMES.jester = "Esc"
-GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.jester = "*Has a sweet tooth\n*Can build a spiritual weapon\n*Doesn't like killing cute things"
+GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.jester = "*Has a sweet tooth\*nFights with candy!\n*Murdering cute things makes her sad"
 GLOBAL.STRINGS.CHARACTER_QUOTES.jester = "\"Have you heard of the traveller?\""
 
 GLOBAL.STRINGS.CHARACTER_TITLES.mollymauk = "The Fabulous Fool"
 GLOBAL.STRINGS.CHARACTER_NAMES.mollymauk = "Esc"
-GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.mollymauk = "*Not scared of much\n*Has a pretty sweet sword"
-GLOBAL.STRINGS.CHARACTER_QUOTES.mollymauk = "\"Long may I reign!\""
+GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.mollymauk = "*Not scared of much\n*Has a pretty sweet sword\n*...that uses his blood."
+GLOBAL.STRINGS.CHARACTER_QUOTES.MOLLYMAUK = "\"Long may I reign!\""
 
-GLOBAL.STRINGS.CHARACTER_TITLES.nott = "The Brave"
+GLOBAL.STRINGS.CHARACTER_TITLES.nott = "The Little Goblin Girl"
 GLOBAL.STRINGS.CHARACTER_NAMES.nott = "Esc"
-GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.nott = "*Monsters like her\n*Goes crazy pretty easily\n*Loves her booze"
-GLOBAL.STRINGS.CHARACTER_QUOTES.nott = "\"There's no comma.\""
+GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.nott = "*Monsters like her\n*Booze keeps her sane...\n*...but isn't good for her"
+GLOBAL.STRINGS.CHARACTER_QUOTES.nott = "\"You can reply to this message.\""
 
 GLOBAL.STRINGS.CHARACTER_TITLES.yasha = "The Orphanmaker"
 GLOBAL.STRINGS.CHARACTER_NAMES.yasha = "Esc"
-GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.yasha = "*Is pretty tough\n*Loves to pick flowers\n*Gets really angry"
+GLOBAL.STRINGS.CHARACTER_DESCRIPTIONS.yasha = "*Is super strong\n*Loves to pick flowers\n*Gets really angry"
 GLOBAL.STRINGS.CHARACTER_QUOTES.yasha = "\"I'm learning how to people.\""
 
 GLOBAL.STRINGS.CHARACTERS.BEAUREGARD = require "speech_beauregard"
@@ -163,6 +234,8 @@ GLOBAL.STRINGS.CHARACTERS.JESTER = require "speech_jester"
 GLOBAL.STRINGS.CHARACTERS.MOLLYMAUK = require "speech_mollymauk"
 GLOBAL.STRINGS.CHARACTERS.NOTT = require "speech_nott"
 GLOBAL.STRINGS.CHARACTERS.YASHA = require "speech_yasha"
+
+GLOBAL.STRINGS.CHARACTERS.NOTT.DESCRIBE.FLASK = "It keeps me sane."
 
 table.insert(GLOBAL.CHARACTER_GENDERS.FEMALE, "beauregard")
 table.insert(GLOBAL.CHARACTER_GENDERS.MALE, "caduceus")

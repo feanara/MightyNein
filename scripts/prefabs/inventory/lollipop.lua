@@ -1,8 +1,7 @@
 local assets=
 {
 	Asset("ANIM", "anim/lollipop.zip"),
-	Asset("ANIM", "anim/swap_lollipop.zip"),
-    Asset("ATLAS", "images/inventoryimages/lollipop.xml"),
+	Asset("ATLAS", "images/inventoryimages/lollipop.xml"),
 	Asset("IMAGE", "images/inventoryimages/lollipop.tex"),
 }
 
@@ -11,7 +10,7 @@ local function onfinished(inst)
 end
 
 local function onequip(inst, owner) 
-    owner.AnimState:OverrideSymbol("swap_object", "swap_lollipop", "swap_lollipop")
+    --owner.AnimState:OverrideSymbol("swap_object", "swap_lollipop", "swap_lollipop")
     owner.AnimState:Show("ARM_carry") 
     owner.AnimState:Hide("ARM_normal") 
 end
