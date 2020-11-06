@@ -14,7 +14,7 @@ Beau - the expositor
 
 Caduceus - the maker of fine graves
  - "That's really great."
- - loves mushrooms
+ - loves mushroomsssdssad
  - no sanity loss when around death
  - vegetarian
 

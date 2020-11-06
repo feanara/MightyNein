@@ -29,7 +29,7 @@ return {
 	ANNOUNCE_BOOMERANG = "Ow! I should try to catch that!",
 	ANNOUNCE_CHARLIE = "What was that?!",
 	ANNOUNCE_CHARLIE_ATTACK = "OW! Something bit me!",
-	ANNOUNCE_COLD = "So cold!",
+	ANNOUNCE_COLD = "It's too cold, even for me!",
 	ANNOUNCE_HOT = "Need... ice... or... shade!",
 	ANNOUNCE_CRAFTING_FAIL = "I don't have all of the ingredients.",
 	ANNOUNCE_DEERCLOPS = "That sounded big!",
@@ -89,7 +89,7 @@ return {
 	
 	BATTLECRY =
 	{
-		GENERIC = "Die!",
+		GENERIC = "Guiding bolt up the butt!",
 		PIG = "Here piggy piggy!",
 		PREY = "I will destroy you!",
 		SPIDER = "I'm going to stomp you dead!",
@@ -105,13 +105,13 @@ return {
 	},
 	DESCRIBE =
 	{
-        GLOMMER = "It's cute, in a gross kind of way.",
+        GLOMMER = "Plop, plop, plop. He's adorable.",
         GLOMMERFLOWER = 
         {
         	GENERIC = "The petals shimmer in the light.",
         	DEAD = "The petals droop and shimmer in the light.",
         },
-        GLOMMERWINGS = "These would look awesome on a helmet!",
+        GLOMMERWINGS = "So beautiful!",
         GLOMMERFUEL = "This goop smells foul.",
         BELL = "Dingalingaling.",
         STATUEGLOMMER = 
@@ -135,7 +135,7 @@ return {
 			ABOVEGROUND = "I'd sure like to whack that mole... thing.",
 		},
 		MOLEHILL = "What a nice hole in the ground for a home!",
-		MOLEHAT = "A wretched stench but excellent visibility.",
+		MOLEHAT = "Extra soft and keeps me dry.",
 
 		EEL = "This will make a delicious meal.",
 		EEL_COOKED = "Smells great!",

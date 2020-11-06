@@ -1,6 +1,6 @@
 TUNING.LOLLIPOP_USES = 100
 TUNING.LOLLIPOP_DAMAGE = 60
---TUNING.BLOOD_SWORD_DAMAGE = 60
+TUNING.BLOOD_SWORD_DAMAGE = 60
 
 PrefabFiles = {
 	"beauregard",
@@ -13,6 +13,8 @@ PrefabFiles = {
 	"inventory/lollipop",
 
 	"mollymauk",
+	"inventory/blood_sword",
+
 	"nott",
 	"inventory/flask",
 	
@@ -176,7 +178,7 @@ AddStategraphState("wilson", newquickeat)
 --INVENTORY--
 GLOBAL.STRINGS.NAMES.LOLLIPOP = "Lollipop"
 GLOBAL.STRINGS.RECIPE_DESC.LOLLIPOP = "Deliciously dangerous."
-GLOBAL.STRINGS.CHARACTERS.GENERIC.DESCRIBE.LOLLIPOP = "Sweet and deadly...just like me!"
+GLOBAL.STRINGS.CHARACTERS.GENERIC.DESCRIBE.LOLLIPOP = "So cute, yet so vicous."
 
 GLOBAL.STRINGS.NAMES.SCROLL_LIGHTS = "Dancing Lights Spell"
 GLOBAL.STRINGS.RECIPE_DESC.SCROLL_LIGHTS = "Little baby fireflies."
@@ -235,7 +237,9 @@ GLOBAL.STRINGS.CHARACTERS.MOLLYMAUK = require "speech_mollymauk"
 GLOBAL.STRINGS.CHARACTERS.NOTT = require "speech_nott"
 GLOBAL.STRINGS.CHARACTERS.YASHA = require "speech_yasha"
 
+GLOBAL.STRINGS.CHARACTERS.JESTER.DESCRIBE.LOLLIPOP = "Sweet and deadly...just like me!"
 GLOBAL.STRINGS.CHARACTERS.NOTT.DESCRIBE.FLASK = "It keeps me sane."
+GLOBAL.STRINGS.CHARACTERS.MOLLYMAUK.DESCRIBE.BLOOD_SWORD = "She's always hungry."
 
 table.insert(GLOBAL.CHARACTER_GENDERS.FEMALE, "beauregard")
 table.insert(GLOBAL.CHARACTER_GENDERS.MALE, "caduceus")

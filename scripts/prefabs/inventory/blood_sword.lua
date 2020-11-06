@@ -50,7 +50,10 @@ local function fn(Sim)
     inst:AddComponent("equippable")
     inst.components.equippable:SetOnEquip( onequip )
     inst.components.equippable:SetOnUnequip( onunequip )
-	    return inst
+
+    inst:AddComponent("characterspecific")
+    inst.components.characterspecific:SetOwner("mollymauk")
+	return inst
 end
 
 return Prefab( "common/inventory/blood_sword", fn, assets) 

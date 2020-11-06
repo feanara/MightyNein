@@ -12,97 +12,39 @@ local prefabs =
 
 function lightsfn(inst, reader)
 	print("casting lights spell")
-    --local pt = Vector3(reader.Transform:GetWorldPosition())
-	--
-    --local numlights = 1
-	--
-    --reader:StartThread(function()
-    --    for k = 1, numlights do
-    --    
-    --        local theta = math.random() * 2 * PI
-    --        local radius = math.random(3, 8)
-	--
-    --        local result_offset = FindValidPositionByFan(theta, radius, 12, function(offset)
-    --            local x,y,z = (pt + offset):Get()
-    --            local ents = TheSim:FindEntities(x,y,z , 1)
-    --            return not next(ents) 
-    --        end)
-	--
-    --        if result_offset then
-    --            local tentacle = SpawnPrefab("tentacle")
-    --            
-    --            tentacle.Transform:SetPosition((pt + result_offset):Get())
-    --            GetPlayer().components.playercontroller:ShakeCamera(reader, "FULL", 0.2, 0.02, .25, 40)
-    --            
-    --            --need a better effect
-    --            local fx = SpawnPrefab("splash_ocean")
-    --            local pos = pt + result_offset
-    --            fx.Transform:SetPosition(pos.x, pos.y, pos.z)
-    --            --PlayFX((pt + result_offset), "splash", "splash_ocean", "idle")
-    --            tentacle.sg:GoToState("attack_pre")
-    --        end
-	--
-    --        Sleep(.33)
-    --    end
-    --end)
+    local pt = Vector3(reader.Transform:GetWorldPosition())
+	
+    local numlights = 1
+	
+    reader:StartThread(function()
+        for k = 1, numlights do
+        
+            local theta = math.random() * 2 * PI
+            local radius = math.random(3, 8)
+	
+            local result_offset = FindValidPositionByFan(theta, radius, 12, function(offset)
+                local x,y,z = (pt + offset):Get()
+                local ents = TheSim:FindEntities(x,y,z , 1)
+                return not next(ents) 
+            end)
+	
+            if result_offset then
+                local lights = SpawnPrefab("dancinglights")
+                
+                lights.Transform:SetPosition((pt + result_offset):Get())
+                
+                ----need a better effect
+                --local fx = SpawnPrefab("splash_ocean")
+                --local pos = pt + result_offset
+                --fx.Transform:SetPosition(pos.x, pos.y, pos.z)
+                ----PlayFX((pt + result_offset), "splash", "splash_ocean", "idle")
+                --lights.sg:GoToState("attack_pre")
+            end
+	
+            Sleep(.33)
+        end
+    end)
     return true    
-
-end
-
-
-function armorfn(inst, reader)
-    --if not GetWorld().components.birdspawner then
-    --    return false
-    --end
-	--
-	--
-    --reader.components.sanity:DoDelta(-TUNING.SANITY_HUGE)
-    --local num = 20 + math.random(10)
-    --
-    ----we can actually run out of command buffer memory if we allow for infinite birds
-	--local x, y, z = reader.Transform:GetWorldPosition()
-	--local ents = TheSim:FindEntities(x,y,z, 10, nil, nil, {'magicalbird'})
-	--if #ents > 30 then
-	--	num = 0
-	--	reader.components.talker:Say(GetString(reader.prefab, "ANNOUNCE_WAYTOOMANYBIRDS"))
-	--elseif #ents > 20 then
-	--	reader.components.talker:Say(GetString(reader.prefab, "ANNOUNCE_TOOMANYBIRDS"))
-	--	num = 10 + math.random(10)
-	--end
-    --
-    --if num > 0 then
-	--	reader:StartThread(function()
-	--		for k = 1, num do
-	--			local pt = GetWorld().components.birdspawner:GetSpawnPoint(Vector3(reader.Transform:GetWorldPosition() ))
-	--            
-	--			if pt then
-	--				local bird = GetWorld().components.birdspawner:SpawnBird(pt, true)
-    --                if bird then
-	--				   bird:AddTag("magicalbird")
-    --                end
-	--			end
-	--			Sleep(math.random(.2, .25))
-	--		end
-	--	end)
-	--end
-    return true
-end
-
-function firefn(inst, reader)
-
-    --local num_lightnings =  16
-    --reader.components.sanity:DoDelta(-TUNING.SANITY_LARGE)
-    --reader:StartThread(function()
-    --    for k = 0, num_lightnings do
-	--
-    --        local rad = math.random(3, 15)
-    --        local angle = k*((4*PI)/num_lightnings)
-    --        local pos = Vector3(reader.Transform:GetWorldPosition()) + Vector3(rad*math.cos(angle), 0, rad*math.sin(angle))
-    --        GetSeasonManager():DoLightningStrike(pos)
-    --        Sleep(math.random( .3, .5))
-    --    end
-    --end)
-    return true
 end
 
 function onfinished(inst)
@@ -132,7 +74,6 @@ function MakeScroll(name, usefn, scrolluses )
         
         inst:AddComponent("inventoryitem")
 		inst.components.inventoryitem.atlasname = "images/inventoryimages/scroll_lights.xml"
-		--inst.components.inventoryitem.atlasname = "images/inventoryimages/"..name..".xml"
 
         inst:AddComponent("finiteuses")
         inst.components.finiteuses:SetMaxUses( scrolluses )
@@ -149,5 +90,3 @@ function MakeScroll(name, usefn, scrolluses )
 end
 
 return MakeBook("scroll_lights", lightsfn, 3)
-       --MakeBook("scroll_armor", armorfn, 3),
-       --MakeBook("scroll_fire", firefn, 3),

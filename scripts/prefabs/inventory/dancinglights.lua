@@ -19,7 +19,7 @@ local function resumestar(inst, time)
     inst.timeleft = time
 end
 
-local function onsave(inst, data)
+local function onsave(inst, data)d
     data.timealive = inst:GetTimeAlive()
     data.init_time = inst.init_time
 end

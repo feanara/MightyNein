@@ -35,11 +35,13 @@ local assets = {
 }
 local prefabs = 
 {
+	"inventory/blood_sword",
 }
 
 -- SWORD
 local start_inv = 
 {
+	"blood_sword"
 }
 
 local fn = function(inst)

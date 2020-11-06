@@ -53,10 +53,10 @@
                     <object folder="2" file="0" x="-106" y="60" angle="0"/>
                 </key>
                 <key id="1" time="599" spin="0">
-                    <object folder="2" file="0" x="-110.478047" y="51.516424" pivot_x="0" pivot_y="1" angle="0" scale_x="1.043907" scale_y="0.967151"/>
+                    <object folder="2" file="0" x="-110.478047" y="46.541609" pivot_x="0" pivot_y="1" angle="0" scale_x="1.043907" scale_y="0.916782"/>
                 </key>
                 <key id="2" time="599" spin="0">
-                    <object folder="2" file="0" x="-4.00995" y="-44.005497" pivot_x="0.50995" pivot_y="0.506169" angle="0" scale_x="1.043907" scale_y="0.967151"/>
+                    <object folder="2" file="0" x="-4.00995" y="-44.005497" pivot_x="0.50995" pivot_y="0.506169" angle="0" scale_x="1.043907" scale_y="0.916782"/>
                 </key>
                 <key id="3" time="1200" spin="0">
                     <object folder="2" file="0" x="-4.00995" y="-38.766282" angle="0"/>
