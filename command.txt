@@ -4,4 +4,7 @@ Force refresh of character animation files, run in cmd:
 
 
 convert anim to individual files
-"E:\Games\Steam\steamapps\common\Don't Starve Mod Tools\mod_tools\ktools-4.4.4\krane.exe" "C:\Users\emily\OneDrive\Desktop\dsmn\nightmaresword\anim.bin" "C:\Users\emily\OneDrive\Desktop\dsmn\nightmaresword\build.bin" "C:\Users\emily\OneDrive\Desktop\dsmn"
+
+"C:\Users\emily\OneDrive\Desktop\MightyNein ref\Mod Tools\ktools-4.4.4\krane.exe" "C:\Users\emily\OneDrive\Desktop\MightyNein ref\anim\wet_meter_player\anim.bin" "C:\Users\emily\OneDrive\Desktop\MightyNein ref\anim\wet_meter_player\build.bin" "C:\Users\emily\OneDrive\Desktop\MightyNein ref\anim\wet_meter_player"
+
+"D:\Games\Steam\steamapps\common\Don't Starve Mod Tools\mod_tools\png.exe" "C:\Users\emily\OneDrive\Desktop\MightyNein ref\scroll_armor.png" "C:\Users\emily\OneDrive\Desktop\MightyNein ref"

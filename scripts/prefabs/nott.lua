@@ -43,10 +43,16 @@ local start_inv =
 	"flask"
 }
 
+local function fnUnequip(inst, item)
+	if item and item.prefab == "spiderhat" then inst:AddTag("monster") end
+end
+
 local fn = function(inst)
 	
 	-- choose which sounds this character will play
-	inst.soundsname = "webber"
+	if IsDLCInstalled(REIGN_OF_GIANTS) then
+		inst.soundsname = "webber"
+	else inst.soundsname = "willow" end
 
 	-- Minimap icon
 	inst.MiniMapEntity:SetIcon( "nott.tex" )
@@ -68,7 +74,9 @@ local fn = function(inst)
 	inst.components.locomotor.runspeed = 6
 	
 	--NEUTRAL ENEMIES
-	inst:AddTag("monster") --spiderwhisperer
+	inst:AddTag("monster")
+	inst.components.eater.monsterimmune = true
+	inst:ListenForEvent("unequippeditem", fnUnequip)
 end
 
 return MakePlayerCharacter("nott", prefabs, assets, fn, start_inv)

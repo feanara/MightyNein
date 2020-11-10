@@ -5,13 +5,6 @@ local assets=
 	Asset("IMAGE", "images/inventoryimages/flask.tex")
 }
 
-local function oneaten(inst, eater)
-	if eater == GetPlayer() then
-		inst.components.drinkable:Drink(inst,eater)
-		return
-	end
-end
-
 local function fn(Sim)
 	local inst = CreateEntity()
 	local trans = inst.entity:AddTransform()
@@ -28,20 +21,10 @@ local function fn(Sim)
     minimap:SetIcon( "images/inventoryimages/flask.png" )
 
 	inst:AddComponent("drinkable")
-    inst:AddComponent("edible")
-    inst.components.edible.hungervalue = 0
-    inst.components.edible.healthvalue = -TUNING.HEALING_MEDSMALL
-	inst.components.edible.sanityvalue = TUNING.SANITY_SMALL
-    inst.components.edible:SetOnEatenFn(oneaten)
-	inst.components.edible.foodtype = "GENERIC"
-    inst.components.edible.stale_hunger = 0
-    inst.components.edible.stale_health = 0
-    inst.components.edible.spoiled_hunger = 0
-    inst.components.edible.spoiled_health = 0	
-	inst.components.edible.forcequickeat=true
+    inst.components.drinkable.healthvalue = -TUNING.HEALING_MEDSMALL
+	inst.components.drinkable.sanityvalue = TUNING.SANITY_SMALL
 
-    inst:AddComponent("inspectable")
-	
+    inst:AddComponent("inspectable")	
     inst:AddComponent("inventoryitem")
 	inst.components.inventoryitem.atlasname = "images/inventoryimages/flask.xml"
 

@@ -38,41 +38,26 @@ local prefabs = {}
 local start_inv = {}
 
 local function fnWorking(inst, data)
-	if data.target and data.target.prefab == "mound"
-	and data.target.components.workable.action == ACTIONS.DIG
-	then inst.components.sanity.ignore = true
+	if data.target and data.target.prefab == "mound" and data.target.components.workable.action == ACTIONS.DIG
+		then inst.components.sanity.ignore = true
 	end
 end
 
 local fn = function(inst)
-	
-	-- choose which sounds this character will play
-	inst.soundsname = "wolfgang"
-
-	-- Minimap icon
+	inst.soundsname = "wilson"
 	inst.MiniMapEntity:SetIcon( "caduceus.tex" )
 	
-	-- Stats	
 	inst.components.health:SetMaxHealth(150)
 	inst.components.hunger:SetMax(150)
 	inst.components.sanity:SetMax(200)
 	
-	-- Damage multiplier (optional)
-    inst.components.combat.damagemultiplier = 1
-	
-	-- Hunger rate (optional)
-	inst.components.hunger.hungerrate = 1 * TUNING.WILSON_HUNGER_RATE
-
 	-- IS A VEGETARIAN
 	inst.components.eater:SetVegetarian()
 
-	-- Movement speed (optional)
-	inst.components.locomotor.walkspeed = 4
-	inst.components.locomotor.runspeed = 6
-	
 	-- NO FEAR OF DEATH
 	inst:ListenForEvent("working", fnWorking)
-	inst.components.sanity.neg_aura_mult = 0
+	inst:AddTag("ghostwhisperer")
+	--inst:DoPeriodicTask(5, fnGhostSanity)
 	
 	-- NO MUSHROOM LOSSES
 	local protected_foods = { "red_cap", "green_cap", "blue_cap", "red_cap_cooked", "green_cap_cooked", "blue_cap_cooked" }
@@ -85,6 +70,6 @@ local fn = function(inst)
 		end
 		return old_DoFoodEffects(self, food_inst)
 	end
-end
+	end
 
 return MakePlayerCharacter("caduceus", prefabs, assets, fn, start_inv)

@@ -27,81 +27,95 @@ local assets = {
         Asset( "ANIM", "anim/shadow_hands.zip" ),
         Asset( "SOUND", "sound/sfx.fsb" ),
         Asset( "SOUND", "sound/wilson.fsb" ),
-		Asset( "IMAGE", "images/inventoryimages/scroll_lights.tex" ),
-		Asset( "ATLAS", "images/inventoryimages/scroll_lights.xml" ),
 
         Asset( "ANIM", "anim/caleb.zip" ),
 }
+
 local prefabs = 
 {
+	"inventory/scroll_fire",
+	"inventory/scroll_armor",
 	"inventory/scroll_lights",
+	"inventory/magearmor"
 }
 
 local start_inv = 
 {
-	"papyrus",
-	"papyrus",
-	"fireflies",
-	"fireflies"
 }
 
-local fn = function(inst)
-	
-	-- choose which sounds this character will play
-	inst.soundsname = "wilson"
+--local function onscrollread(inst, data)
+--	if data and data.components.spellscroll and 
+--end
 
-	-- Minimap icon
+local function sanityfn(inst)
+	local x,y,z = inst.Transform:GetWorldPosition()	
+	local delta = 0
+	local max_rad = 10
+	local ents = TheSim:FindEntities(x,y,z, max_rad, {"fire"})
+    for k,v in pairs(ents) do 
+    	if v.components.burnable and v.components.burnable.burning and not v:HasTag("structure") and not v.components.lighter then
+    		local sz = -TUNING.SANITYAURA_TINY
+    		local rad = v.components.burnable:GetLargestLightRadius() or 1
+    		sz = sz * ( math.min(max_rad, rad) / max_rad )
+			local distsq = inst:GetDistanceSqToInst(v)
+			delta = delta + sz/math.max(1, distsq)
+    	end
+    end
+    
+    return delta
+end
+
+local fn = function(inst)
+	inst.soundsname = "wilson"
 	inst.MiniMapEntity:SetIcon( "caleb.tex" )
 	
 	-- SQUISHY
-	-- Stats	
 	inst.components.health:SetMaxHealth(120)
 	inst.components.hunger:SetMax(150)
 	inst.components.sanity:SetMax(200)
 	
-	-- Damage multiplier (optional)
-    inst.components.combat.damagemultiplier = 1
-	
-	-- Hunger rate (optional)
-	inst.components.hunger.hungerrate = 1 * TUNING.WILSON_HUNGER_RATE
+	--SPELLS
+	inst:AddComponent("scrollreader")
 
-	-- Movement speed (optional)
-	inst.components.locomotor.walkspeed = 4
-	inst.components.locomotor.runspeed = 6
-	
-	-- SPELLS
-	inst:AddComponent("reader")
+	--inst:ListenForEvent(scrollread, onscrollread)
+	inst:AddComponent("magearmorable")
+	inst.components.magearmorable.putonfn = function(inst, absorb)
+		inst.components.health.absorb = absorb
+		inst.components.talker:Say('I feel much safer now!')
+	end
 
-	local scroll = Recipe("scroll_lights", 
+	inst.components.magearmorable.takeofffn = function(inst)
+		inst.components.health.absorb = 0
+		inst.components.talker:Say('There goes my mage armor!')
+		if inst.SoundEmitter then inst.SoundEmitter:PlaySound("dontstarve/HUD/get_gold") end
+	end
+
+	local lights = Recipe("scroll_lights", 
 	{
 		Ingredient("papyrus", 2), 
 		Ingredient("fireflies", 2)
 	}, RECIPETABS.MAGIC, TECH.NONE)
+	lights.atlas = "images/inventoryimages/scroll_lights.xml"
 	inst.components.builder:AddRecipe("scroll_lights")
-	scroll.atlas = "images/inventoryimages/scroll_lights.xml"
 
-	--scroll = Recipe("scroll_fire", 
-	--{
-	--	Ingredient("papyrus", 2), 
-	--	Ingredient("ice", 2)
-	--}, GLOBAL.RECIPETABS.MAGIC, TECH.MAGIC_TWO)
-	--inst.components.builder:AddRecipe("scroll_fire")
-	--scroll.atlas = "images/inventoryimages/scroll_fire.xml"
+	local armor = Recipe("scroll_armor", 
+	{
+		Ingredient("papyrus", 2),
+		Ingredient("marble", 2)
+	}, RECIPETABS.MAGIC, TECH.ONE)
+	armor.atlas = "images/inventoryimages/scroll_armor.xml"
+	inst.components.builder:AddRecipe("scroll_armor")
+	
+	local fire = Recipe("scroll_fire", 
+	{
+		Ingredient("papyrus", 2), 
+		Ingredient("ash", 4)
+	}, RECIPETABS.MAGIC, TECH.TWO)
+	fire.atlas = "images/inventoryimages/scroll_fire.xml"
+	inst.components.builder:AddRecipe("scroll_fire")
 
-	--scroll = Recipe("scroll_armor", 
-	--{
-	--	Ingredient("papyrus", 2), 
-	--	Ingredient("redgem", 1)
-	--}, GLOBAL.RECIPETABS.MAGIC, TECH.MAGIC_THREE)
-	--inst.components.builder:AddRecipe("scroll_armor")
-	--scroll.atlas = "images/inventoryimages/scroll_armor.xml"
-
-	-- TODO FIRE
-	--inst:ListenForEvent( "killed", function(it, data)
-	--	if data and data.victim and not data.victim:HasTag("hostile") and (data.victim:HasTag("prey") or data.victim:HasTag("butterfly") or data.victim:HasTag("follower")) then
-	--		inst.components.sanity:DoDelta(-TUNING.SANITY_TINY)
-	--	end
-	--end )
+	-- FIRE SANITY LOSS
+	inst.components.sanity.custom_rate_fn = sanityfn
 end
 
 return MakePlayerCharacter("caleb", prefabs, assets, fn, start_inv)

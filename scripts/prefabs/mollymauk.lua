@@ -35,19 +35,19 @@ local assets = {
 }
 local prefabs = 
 {
-	"inventory/blood_sword",
+	"inventory/bloodsword"
 }
 
 -- SWORD
 local start_inv = 
 {
-	"blood_sword"
+	"bloodsword"
 }
 
 local fn = function(inst)
 	
 	-- choose which sounds this character will play
-	inst.soundsname = "woodie"
+	inst.soundsname = "wilson"
 
 	-- Minimap icon
 	inst.MiniMapEntity:SetIcon( "mollymauk.tex" )
@@ -67,8 +67,8 @@ local fn = function(inst)
 	inst.components.locomotor.walkspeed = 4
 	inst.components.locomotor.runspeed = 6
 	
-	-- TODO blood sword that lowers sanity
 	-- Dapperness
+	inst.components.sanity.dapperness = 1.25
 end
 
 return MakePlayerCharacter("mollymauk", prefabs, assets, fn, start_inv)

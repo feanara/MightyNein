@@ -42,15 +42,34 @@ local easing = require("easing")
 
 local function NoWetnessRate(inst)
 	local moist_dapperness = 0
-	for k, v in pairs(inst.components.inventory.equipslots) do
-		if v:GetIsWet() and v.components.equippable then
-			moist_dapperness = moist_dapperness - TUNING.WET_ITEM_DAPPERNESS
+	if inst.components.moisture then
+		for k, v in pairs(inst.components.inventory.equipslots) do
+			if v:GetIsWet() and v.components.equippable then
+				moist_dapperness = moist_dapperness - TUNING.WET_ITEM_DAPPERNESS
+			end
+		end
+		local moisture_delta = easing.inSine(inst.components.moisture:GetMoisture(), 0, TUNING.MOISTURE_SANITY_PENALTY_MAX, inst.components.moisture.maxMoistureRate)
+		return moist_dapperness - moisture_delta
+	end
+end
+
+local function onbefriend(inst, follower)
+	if follower.components.follower and follower.components.follower.maxfollowtime then
+		follower.components.follower:AddLoyaltyTime(follower.components.follower.maxfollowtime * .5)
+	end
+end
+
+local function ongaveitem(inst, data)
+    if data.target.components.trader and data.target.components.follower and data.item.components.equippable 
+	and data.item.components.equippable.equipslot == EQUIPSLOTS.HEAD then
+		inst.SoundEmitter:PlaySound("dontstarve/common/makeFriend")
+		inst.components.leader:AddFollower(data.target)
+		if data.item.components.dapperness then
+			data.target.components.follower:AddLoyaltyTime(data.item.components.dapperness:GetDapperness(inst))
 		end
 	end
-	local moisture = inst.components.moisture
-	local moisture_delta = easing.inSine(moisture:GetMoisture(), 0, TUNING.MOISTURE_SANITY_PENALTY_MAX, moisture:GetMaxMoisture())
-	return moist_dapperness - moisture_delta
 end
+
 
 local fn = function(inst)
 	
@@ -82,8 +101,9 @@ local fn = function(inst)
 	--WATER RESISTANT
 	inst.components.sanity.custom_rate_fn = NoWetnessRate
 	
-	--TODO UK'ATOA OR TENTACLES
-	
-end
+	--FRIENDLY
+	inst:ListenForEvent("gaveitem", ongaveitem)
+	inst:ListenForEvent("gainedfollower", onbefriend)
+end	
 
 return MakePlayerCharacter("fjord", prefabs, assets, fn, start_inv)

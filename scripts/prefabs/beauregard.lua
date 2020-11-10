@@ -37,8 +37,8 @@ local prefabs = {}
 
 local start_inv = 
 {
-	"smallmeat_dried",
-	"smallmeat_dried"
+	"meat_dried",
+	"meat_dried"
 }
 
 local fn = function(inst)

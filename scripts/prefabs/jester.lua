@@ -41,6 +41,13 @@ local start_inv =
 	"lollipop"
 }
 
+local function onkilled(it, data)
+	if data and data.victim and (data.victim:HasTag("prey") or data.victim:HasTag("butterfly") or data.victim:HasTag("follower")) 
+	and not data.victim:HasTag("hostile") then
+		inst.components.sanity:DoDelta(-TUNING.SANITY_TINY)
+	end
+end 
+
 local SWEETS = {'pomegranate', 'berries', 'dragonfruit', 'watermelon', 'cave_banana', 'honey', 'butterflymuffin', 'taffy', 'pumpkincookie', 'honeynuggets', 
 				'honeyham', 'dragonpie', 'jammypreserves', 'waffles', 'powcake', 'coconut_halved', 'fruitmedley', 'taffy', 'flowersalad', 'watermelonicle',
 				'coconut_cooked', 'banana', 'sweet_potato', 'bananapop', 'sweetpotatosouffle', 'freshfruitcrepes', 'lotus_flower', 'tea', 'icedtea', 'gummy_cake'}
@@ -53,6 +60,25 @@ local function issweet (val)
     end
 
     return false
+end
+
+local function calculateFoodValues(food)
+	local changesweremade = false
+	
+	-- Local variables to hold our food values.
+	local healthval = 0
+	
+	local food_stats = SWEETS[food.prefab]
+	
+	-- If we found an entry in our SWEETS dictionary for the food...
+	if issweet(food.prefab) then
+		-- We indicate that we made changes to the food.
+		changesweremade = true
+		healthval = food.components.edible.healthvalue + 5
+	end
+	
+	-- Return the results.
+	return changesweremade, healthval
 end
 
 local fn = function(inst)
@@ -90,31 +116,8 @@ local fn = function(inst)
 	lollipop.atlas = "images/inventoryimages/lollipop.xml"
 	
 	--SANITY LOSS ON MURDER	
-	inst:ListenForEvent( "killed", function(it, data)
-		if data and data.victim and not data.victim:HasTag("hostile") and (data.victim:HasTag("prey") or data.victim:HasTag("butterfly") or data.victim:HasTag("follower")) then
-			inst.components.sanity:DoDelta(-TUNING.SANITY_TINY)
-		end
-	end )
+	inst:ListenForEvent( "killed", onkilled)
 	
-	local function calculateFoodValues(food)
-		local changesweremade = false
-		
-		-- Local variables to hold our food values.
-		local healthval = 0
-		
-		local food_stats = SWEETS[food.prefab]
-		
-		-- If we found an entry in our SWEETS dictionary for the food...
-		if issweet(food.prefab) then
-			-- We indicate that we made changes to the food.
-			changesweremade = true
-			healthval = food.components.edible.healthvalue + 5
-		end
-		
-		-- Return the results.
-		return changesweremade, healthval
-	end
-
 	local old_Eat = inst.components.eater.Eat
 	inst.components.eater.Eat =  function(self, food)
 		-- Make a local variable holding the edible component of the food (optimization).

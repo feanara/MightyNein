@@ -1,83 +1,55 @@
-local assets = 
+local assets=
 {
-   Asset("ANIM", "anim/fireflies.zip")
+    Asset("ANIM", "anim/fireflies.zip"),
 }
 
---Needs to save/load time alive.
+local INTENSITY = .6
 
-local function kill_light(inst)
-    inst.AnimState:PlayAnimation("disappear")
-    inst:DoTaskInTime(0.6, function() inst.SoundEmitter:KillAllSounds() inst:Remove() end)    
+local function fadeout(inst)
+    inst.components.fader:StopAll()
+    inst.AnimState:PlayAnimation("swarm_pst")
+    inst.components.fader:Fade(INTENSITY, 0, .75+math.random()*1, function(v) inst.Light:SetIntensity(v) end, function() inst:Remove() end)
 end
 
-local function resumestar(inst, time)
-    if inst.death then
-        inst.death:Cancel()
-        inst.death = nil
-    end
-    inst.death = inst:DoTaskInTime(time, kill_light)
-    inst.timeleft = time
-end
-
-local function onsave(inst, data)d
-    data.timealive = inst:GetTimeAlive()
-    data.init_time = inst.init_time
-end
-
-local function onload(inst, data)
-        if data.timealive and data.init_time then
-            inst.init_time = data.init_time
-            local timeleft = (inst.init_time or 120) - data.timealive
-            if timeleft > 0 then
-            resumestar(inst, timeleft)
-        else
-            kill_light(inst)
-        end
-    end
-end
-
-local function pulse_light(inst)
-    local s = GetSineVal(0.05, true, inst)
-    local rad = Lerp(4, 5, s)
-    local intentsity = Lerp(0.8, 0.7, s)
-    local falloff = Lerp(0.8, 0.7, s) 
-    inst.Light:SetFalloff(falloff)
-    inst.Light:SetIntensity(intentsity)
-    inst.Light:SetRadius(rad)
-    inst.Light:Enable(true)
-end
-   
 local function fn(Sim)
-	local inst = CreateEntity()
-	local trans = inst.entity:AddTransform()
-    local anim = inst.entity:AddAnimState()
+    local inst = CreateEntity()
 
-    inst.entity:AddPhysics()
     inst:AddTag("NOBLOCK")
+    inst.entity:AddTransform()
+    inst.entity:AddAnimState()
+    
+    inst.entity:AddPhysics()
+ 
+    local light = inst.entity:AddLight()
+    inst.Light:SetFalloff( 0.5 )
+    inst.Light:SetRadius( 2 )
+    light:SetIntensity( INTENSITY )
+    light:SetColour(100/255, 100/255, 100/255)
+    light:Enable(false)
 
+    inst.AnimState:SetBloomEffectHandle( "shaders/anim.ksh" )
+    
     inst.AnimState:SetBank("fireflies")
     inst.AnimState:SetBuild("fireflies")
-
-    local light = inst.entity:AddLight()
-    light:SetFalloff(1)
-    light:SetIntensity(INTENSITY)
-    light:SetRadius(1)
-    light:SetColour(180/255, 195/255, 150/255)
-    light:Enable(true)
-    inst.AnimState:SetBloomEffectHandle( "shaders/anim.ksh" )
-  
+    
+    inst:AddComponent("follower")
     inst:AddComponent("inspectable")
-
-    inst:AddComponent("sanityaura")
-    inst.components.sanityaura.aura = TUNING.SANITYAURA_SMALL
-    inst.init_time = 120
-    inst.task = inst:DoPeriodicTask(0.1, pulse_light)
-    inst.death = inst:DoTaskInTime(inst.init_time, kill_light)
-
-    inst.OnLoad = onload
-    inst.OnSave = onsave
-
+    
+    --FADE IN
+	print("Lights fading in")
+    inst:AddComponent("fader")
+    inst.components.fader:StopAll()
+    inst.AnimState:PlayAnimation("swarm_pre")
+    inst.AnimState:PushAnimation("swarm_loop", true)
+    inst.Light:Enable(true)
+    inst.Light:SetIntensity(0)
+    inst.components.fader:Fade(0, INTENSITY, 3+math.random()*2, function(v) inst.Light:SetIntensity(v) end, function() end)
+	
+    inst:ListenForEvent( "daytime", function()
+        inst:DoTaskInTime(2+math.random()*1, function() fadeout(inst) end)
+    end, GetWorld())
+    
     return inst
 end
 
-return Prefab( "common/dancinglights", fn, assets) 
+return Prefab( "common/inventory/dancinglights", fn, assets) 
