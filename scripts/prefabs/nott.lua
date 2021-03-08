@@ -52,7 +52,7 @@ local fn = function(inst)
 	-- choose which sounds this character will play
 	if IsDLCInstalled(REIGN_OF_GIANTS) then
 		inst.soundsname = "webber"
-	else inst.soundsname = "willow" end
+	else inst.soundsname = "wendy" end
 
 	-- Minimap icon
 	inst.MiniMapEntity:SetIcon( "nott.tex" )

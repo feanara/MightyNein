@@ -44,7 +44,7 @@ local start_inv =
 local function onkilled(it, data)
 	if data and data.victim and (data.victim:HasTag("prey") or data.victim:HasTag("butterfly") or data.victim:HasTag("follower")) 
 	and not data.victim:HasTag("hostile") then
-		inst.components.sanity:DoDelta(-TUNING.SANITY_TINY)
+		inst.components.sanity:DoDelta(-TUNING.SANITY_SMALL)
 	end
 end 
 

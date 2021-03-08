@@ -1,4 +1,3 @@
---local texture = "fx/magearmor/magearmor.tex"
 local texture = "fx/torchfire.tex"
 local shader = "shaders/particle.ksh"
 local colour_envelope_name = "magecolourenvelope"

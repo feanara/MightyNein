@@ -12,8 +12,6 @@ local RageMeter = Class(Widget, function(self, owner)
 	self.max = owner.components.rage.max
 
     self.anim = self:AddChild(UIAnim())
-	--self.anim:GetAnimState():SetBank("wet")
-	--self.anim:GetAnimState():SetBuild("wet_meter_player")
 	self.anim:GetAnimState():SetBank("rage")
 	self.anim:GetAnimState():SetBuild("rage_meter")
 	self.anim:SetClickable(true)

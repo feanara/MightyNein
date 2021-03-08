@@ -44,7 +44,7 @@ local function fnWorking(inst, data)
 end
 
 local fn = function(inst)
-	inst.soundsname = "wilson"
+	inst.soundsname = "woodie"
 	inst.MiniMapEntity:SetIcon( "caduceus.tex" )
 	
 	inst.components.health:SetMaxHealth(150)

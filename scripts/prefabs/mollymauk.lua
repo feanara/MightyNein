@@ -1,7 +1,6 @@
 
 local MakePlayerCharacter = require "prefabs/player_common"
 
-
 local assets = {
 
         Asset( "ANIM", "anim/player_basic.zip" ),
@@ -47,7 +46,7 @@ local start_inv =
 local fn = function(inst)
 	
 	-- choose which sounds this character will play
-	inst.soundsname = "wilson"
+	inst.soundsname = "maxwell"
 
 	-- Minimap icon
 	inst.MiniMapEntity:SetIcon( "mollymauk.tex" )

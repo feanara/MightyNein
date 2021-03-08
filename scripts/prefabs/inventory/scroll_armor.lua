@@ -1,7 +1,6 @@
 local assets =
 {
     Asset("ANIM", "anim/scroll_armor.zip"),
-    --Asset("ANIM", "anim/magearmor_meter.zip"),
 	Asset("ATLAS", "images/inventoryimages/scroll_armor.xml"),
 	Asset("IMAGE", "images/inventoryimages/scroll_armor.tex"),
 }

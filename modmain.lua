@@ -316,13 +316,13 @@ STRINGS.CHARACTER_QUOTES.fjord = "\"Eldriiitch bleeaast.\""
 
 STRINGS.CHARACTER_TITLES.jester = "The Little Sapphire"
 STRINGS.CHARACTER_NAMES.jester = "Esc"
-STRINGS.CHARACTER_DESCRIPTIONS.jester = "*Has a sweet tooth\*nFights with candy!\n*Murdering cute things makes her sad"
+STRINGS.CHARACTER_DESCRIPTIONS.jester = "*Has a sweet tooth\nFights with candy!\n*Murdering cute things makes her sad"
 STRINGS.CHARACTER_QUOTES.jester = "\"Have you heard of the traveller?\""
 
 STRINGS.CHARACTER_TITLES.mollymauk = "The Fabulous Fool"
 STRINGS.CHARACTER_NAMES.mollymauk = "Esc"
 STRINGS.CHARACTER_DESCRIPTIONS.mollymauk = "*Not scared of much\n*Has a pretty sweet sword\n*...that uses his blood."
-STRINGS.CHARACTER_QUOTES.MOLLYMAUK = "\"Long may I reign!\""
+STRINGS.CHARACTER_QUOTES.mollymauk = "\"Long may I reign!\""
 
 STRINGS.CHARACTER_TITLES.nott = "The Little Goblin Girl"
 STRINGS.CHARACTER_NAMES.nott = "Esc"

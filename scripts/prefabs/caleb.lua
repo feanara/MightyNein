@@ -27,7 +27,6 @@ local assets = {
         Asset( "ANIM", "anim/shadow_hands.zip" ),
         Asset( "SOUND", "sound/sfx.fsb" ),
         Asset( "SOUND", "sound/wilson.fsb" ),
-
         Asset( "ANIM", "anim/caleb.zip" ),
 }
 

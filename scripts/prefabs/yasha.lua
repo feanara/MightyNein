@@ -94,7 +94,7 @@ local function LoseRage(inst)
 	inst.components.sanity.ignore = false
 	inst.components.health.absorb = 0
 
-	inst.components.sanity:DoDelta(25)
+	inst.components.sanity:DoDelta(-TUNING.SANITY_MEDLARGE)
 	inst.components.rage:StopDrainEffect()
 
 	if inst.HUD.rageOL then
@@ -113,7 +113,7 @@ local function onpick(inst, data)
 end
 
 local fn = function(inst)
-	inst.soundsname = "willow"
+	inst.soundsname = "wolfgang"
 	inst.MiniMapEntity:SetIcon( "yasha.tex" )
 	
 	inst.components.health:SetMaxHealth(200)

@@ -44,8 +44,9 @@ local start_inv =
 local fn = function(inst)
 	
 	-- choose which sounds this character will play
-	inst.soundsname = "wickerbottom"
-
+	if IsDLCInstalled(REIGN_OF_GIANTS) then
+		inst.soundsname = "wigfrid"
+	else inst.soundsname = "wickerbottom" end
 	-- Minimap icon
 	inst.MiniMapEntity:SetIcon( "beauregard.tex" )
 	
