@@ -5,6 +5,6 @@ Force refresh of character animation files, run in cmd:
 
 convert anim to individual files (get the anim.bin from E:\Games\Steam\steamapps\common\dont_starve\data\anim and the build.bin plus any .tex from the character's anim zip)
 
-"C:\Users\emily\OneDrive\Desktop\dsmn\ktools-4.4.4\krane.exe" "C:\Users\emily\OneDrive\Desktop\dsmn\anim\yasha_actions\anim.bin" "C:\Users\emily\OneDrive\Desktop\dsmn\anim\yasha_actions\build.bin" "C:\Users\emily\OneDrive\Desktop\dsmn\anim\yasha_actions"
+"C:\Users\emily\OneDrive\Desktop\dsmn\ktools-4.4.4\krane.exe" "C:\Users\emily\OneDrive\Desktop\dsmn\anim\ghost_wendy_build\anim.bin" "C:\Users\emily\OneDrive\Desktop\dsmn\anim\ghost_wendy_build\build.bin" "C:\Users\emily\OneDrive\Desktop\dsmn\anim\ghost_wendy_build"
 
 "D:\Games\Steam\steamapps\common\Don't Starve Mod Tools\mod_tools\png.exe" "C:\Users\emily\OneDrive\Desktop\dsmn\scroll_armor.png" "C:\Users\emily\OneDrive\Desktop\dsmn"
