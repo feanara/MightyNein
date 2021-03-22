@@ -28,7 +28,7 @@ local function ragedelta(inst, ragelevel)
 	if inst.HUD and inst.HUD.controls then
 	print('rage hud')
 		if inst.components.rage:IsRaging() then
-			print('rage hud raging')
+			GetSeasonManager():ForcePrecip()
 			if not inst.HUD.controls.ragemeter then
 				print('adding rage hud')
 				inst.HUD.controls.ragemeter = inst.HUD.controls.sidepanel:AddChild(RageMeter(inst))
@@ -37,27 +37,34 @@ local function ragedelta(inst, ragelevel)
 				inst.HUD.controls.mapcontrols.minimapBtn:Hide()
 			end
 			inst.HUD.controls.ragemeter.rage = ragelevel
-		elseif not inst.components.rage:IsRaging() and inst.HUD.controls.ragemeter then
-			print('rage hud removing')
-			inst.HUD.controls.ragemeter:Deactivate()
-			inst.HUD.controls.ragemeter:Kill()
-			inst.HUD.controls.ragemeter = nil
-			inst.HUD.controls.crafttabs:Show()
-			inst.HUD.controls.mapcontrols.minimapBtn:Show()
+		else
+			GetSeasonManager():StopPrecip()
+			if inst.HUD.controls.ragemeter then
+				print('rage hud removing')
+				inst.HUD.controls.ragemeter:Deactivate()
+				inst.HUD.controls.ragemeter:Kill()
+				inst.HUD.controls.ragemeter = nil
+				inst.HUD.controls.crafttabs:Show()
+				inst.HUD.controls.mapcontrols.minimapBtn:Show()
+			end
 		end
 	end
 end
 
 local function EnterRage(inst)
-	GetClock():DoLightningLighting()
-	GetPlayer().components.playercontroller:ShakeCamera(inst, "FULL", 0.7, 0.02, .5, 40)
+	inst.components.health.invincible = true
+
+	local seasonmanager = GetSeasonManager()
+	--seasonmanager:DoLightningStrike(Vector3(inst.Transform:GetWorldPosition()))
+	seasonmanager:DoMediumLightning()
+	--seasonmanager:StartPrecip()
+	seasonmanager:ForcePrecip()
 
 	inst:PushEvent("transform_raging")
 	inst:AddTag("raging")
 	inst.AnimState:SetBuild("yasha_raging")
 
 	inst.components.talker:Say("I would like to rage!")
-	--inst.sg:PushEvent("powerup")
 
     inst.components.combat.damagemultiplier = 2.1
 	inst.components.locomotor.runspeed = TUNING.WILSON_RUN_SPEED*1.1
@@ -76,6 +83,7 @@ local function EnterRage(inst)
 	GetWorld().components.colourcubemanager:SetOverrideColourCube("images/colour_cubes/beaver_vision_cc.tex")
 
 	inst.components.rage:StartDrainEffect(2)
+	inst.components.health.invincible = false
 end
 
 
@@ -85,7 +93,6 @@ local function LoseRage(inst)
 	inst.AnimState:SetBuild("yasha")
 
 	inst.components.talker:Say("That was exhausting.")
-	--inst.sg:PushEvent("powerdown")
 
     inst.components.combat.damagemultiplier = 1.1
 	inst.components.locomotor.runspeed = TUNING.WILSON_RUN_SPEED
@@ -102,6 +109,7 @@ local function LoseRage(inst)
 		inst.HUD.rageOL = nil
 	end
 	GetWorld().components.colourcubemanager:SetOverrideColourCube(nil)
+	GetSeasonManager():StopPrecip()
 end
 
 
