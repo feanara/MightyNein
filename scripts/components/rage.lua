@@ -27,7 +27,7 @@ end
 
 function Rage:StartDrainEffect(dt)
 	self:StopDrainEffect()
-    self.task = self.inst:DoPeriodicTask(dt, function() self:DoDelta(-self.rate, true) end)
+    self.task = self.inst:DoPeriodicTask(dt, function() self:DoDelta(-self.rate) end)
 end
 
 function Rage:OnLoad(data)
@@ -41,21 +41,21 @@ function Rage:OnLoad(data)
         end
     end
 
-    if self.is_raging then
-        if self.makeraging then
-            self.makeraging(self.inst)
-        end
+    if self.is_raging and self.makeraging then
+		self.makeraging(self.inst)
     end
 
 end
 
-function Rage:DoDelta(delta, overtime)
+function Rage:DoDelta(delta)
     local old = self.current
 	
     self.current = self.current + delta    
     if self.current < 0 then self.current = 0 end
     if self.current > self.max then self.current = self.max end
 
+	print('RAGE DELTA: '..old..' -> '..self.current)
+	print(self:GetDebugString())
 	self.inst:PushEvent("ragedelta", self.current)
 
     if delta ~= 0 then
@@ -68,7 +68,7 @@ function Rage:DoDelta(delta, overtime)
 				if self.inst.components.sanity then self.inst.components.sanity:DoDelta(-TUNING.SANITY_MED) end
             end
 
-        elseif not self.is_raging and self.current >= self.max then
+        elseif not self.is_raging and self.current >= (self.max/2) then
             self.is_raging = true
             
             if self.makeraging then
