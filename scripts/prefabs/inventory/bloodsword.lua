@@ -23,6 +23,7 @@ local function onunequip(inst, owner)
     owner.AnimState:Show("ARM_normal") 
 end
 
+--When he hits, deals sanity damage to himself
 local function attackfn(inst, attacker, target)
 	if attacker.components.sanity then
 		attacker.components.sanity:DoDelta(-TUNING.SANITY_SMALL) --SANITY_TINY

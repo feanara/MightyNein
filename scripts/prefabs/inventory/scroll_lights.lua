@@ -10,6 +10,7 @@ local prefabs =
 	"inventory/dancinglights",
 }    
 
+--spawn 3 dancing lights (at random locations on screen) using fireflies animation
 function lightsfn(inst, reader)
 	SpawnLights(reader, 209/255, 73/255, 170/255)
 	SpawnLights(reader, 73/255, 170/255, 209/255)

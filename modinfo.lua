@@ -1,6 +1,6 @@
 -- This information tells other players more about the mod
 name = "Mighty Nein"
-description = "Eight new characters"
+description = "Play as one of the Nein from Critical Role"
 author = "Feanara"
 version = "0.1" -- This is the version of the template. Change it to your own number.
 

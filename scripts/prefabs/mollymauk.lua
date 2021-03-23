@@ -56,17 +56,12 @@ local fn = function(inst)
 	inst.components.hunger:SetMax(150)
 	inst.components.sanity:SetMax(200)
 	
-	-- Damage multiplier (optional)
     inst.components.combat.damagemultiplier = 1
-	
-	-- Hunger rate (optional)
 	inst.components.hunger.hungerrate = 1 * TUNING.WILSON_HUNGER_RATE
-
-	-- Movement speed (optional)
 	inst.components.locomotor.walkspeed = 4
 	inst.components.locomotor.runspeed = 6
 	
-	-- Dapperness
+	-- Molly is extra dapper
 	inst.components.sanity.dapperness = 1.25
 end
 

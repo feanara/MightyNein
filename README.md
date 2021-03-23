@@ -23,7 +23,7 @@ Caleb - the zemnian
  "Leave me alone, I'm reading."
  - crafts spell scrolls
  - doesn't hit hard
- - sanity loss when starting fire
+ - sanity loss when he lights stray fires
 
 
 Fjord - the captain
@@ -57,5 +57,5 @@ Nott - the brave
 Yasha - the orphanmaker
  "I'm learning how to people."
  - high health
- - enters rage when dealing x damage? (similar to werebeaver)
+ - Rages during combat
  - extra sanity when picking flowers

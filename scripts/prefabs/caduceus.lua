@@ -37,6 +37,7 @@ local prefabs = {}
 
 local start_inv = {}
 
+--Not bothered by digging up graves
 local function fnWorking(inst, data)
 	if data.target and data.target.prefab == "mound" and data.target.components.workable.action == ACTIONS.DIG
 		then inst.components.sanity.ignore = true
@@ -57,7 +58,6 @@ local fn = function(inst)
 	-- NO FEAR OF DEATH
 	inst:ListenForEvent("working", fnWorking)
 	inst:AddTag("ghostwhisperer")
-	--inst:DoPeriodicTask(5, fnGhostSanity)
 	
 	-- NO MUSHROOM LOSSES
 	local protected_foods = { "red_cap", "green_cap", "blue_cap", "red_cap_cooked", "green_cap_cooked", "blue_cap_cooked" }

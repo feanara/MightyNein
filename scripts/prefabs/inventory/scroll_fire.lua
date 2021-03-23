@@ -9,6 +9,7 @@ local prefabs =
 {
 }    
 
+--Light everything on fire within a specific radius (10)
 function firefn(inst, reader)
     local pos = Vector3(inst.Transform:GetWorldPosition())
 

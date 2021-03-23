@@ -119,6 +119,7 @@ local State = GLOBAL.State
 local TimeEvent = GLOBAL.TimeEvent
 
 --------------- POST INIT ---------------
+--Fjord needs unique ability to gain followers
 AddComponentPostInit("leader", function(self)
 	self.OldAddFollower = self.AddFollower
 	function self:AddFollower(follower)
@@ -127,6 +128,7 @@ AddComponentPostInit("leader", function(self)
 	end
 end)
 
+--Fjord needs unique ability to trade with new items
 AddComponentPostInit("trader", function(self)
 	self.OldAcceptGift = self.AcceptGift
 	function self:AcceptGift(giver, item)
@@ -135,6 +137,7 @@ AddComponentPostInit("trader", function(self)
 	end
 end)
 
+--Nott needs to keep her monster tag when removing the spider hat
 AddComponentPostInit("equippable", function(self)
 	self.OldUnequip = self.Unequip
 	function self:Unequip(owner, slot)
@@ -143,6 +146,7 @@ AddComponentPostInit("equippable", function(self)
 	end
 end)
 
+--Caduceus is less scared of ghosts
 AddPrefabPostInit("ghost", function(self)
 	self.components.sanityaura.aurafn = function(inst, observer)
 		if observer:HasTag("ghostwhisperer") then return inst.components.sanityaura.aura * .5
@@ -150,10 +154,12 @@ AddPrefabPostInit("ghost", function(self)
 	end
 end)
 
-
 --------------- TUNING ---------------
 
+
 --------------- ACTIONS ---------------
+
+--#region Drink: Nott drinks from her flask
 ACTIONS.DRINK = GLOBAL.Action({mount_enabled=true})
 ACTIONS.DRINK.id = "DRINK"
 ACTIONS.DRINK.str = "Drink"
@@ -204,7 +210,9 @@ local drink = State({
 AddAction(ACTIONS.DRINK)
 AddStategraphState("wilson", drink)
 AddStategraphActionHandler("wilson", ActionHandler(ACTIONS.DRINK, "drink"))
+--#endregion Drink
 
+--#region spellscroll: Caleb casts a spell
 ACTIONS.READSPELLSCROLL = GLOBAL.Action({mount_enabled=true})
 ACTIONS.READSPELLSCROLL.id = "READSPELLSCROLL"
 ACTIONS.READSPELLSCROLL.str = "Read Scroll"
@@ -266,6 +274,7 @@ local readscroll = State({
 AddAction(ACTIONS.READSPELLSCROLL)
 AddStategraphState("wilson", readscroll)
 AddStategraphActionHandler("wilson", ActionHandler(ACTIONS.READSPELLSCROLL, "readscroll"))
+--#endregion spellscroll
 
 --------------- INVENTORY ---------------
 STRINGS.NAMES.LOLLIPOP = "Lollipop"
@@ -288,51 +297,52 @@ STRINGS.RECIPE_DESC.SCROLL_FIRE = "Weaponized fire."
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.SCROLL_FIRE = "Caleb knows how to read this."
 
 STRINGS.NAMES.FLASK = "Bottomless Flask"
-STRINGS.CHARACTERS.GENERIC.DESCRIBE.FLASK = "Phew, that stuff is strong."
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.FLASK = "That's some strong stuff."
 
 STRINGS.NAMES.BLOODSWORD = "Blood Sword"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.BLOODSWORD = "Molly's great with that sword."
 
 --------------- CHARACTERS ---------------
+STRINGS.CHARACTER_NAMES.beauregard = "Beauregard"
 STRINGS.CHARACTER_TITLES.beauregard = "The Expositor"
-STRINGS.CHARACTER_NAMES.beauregard = "Esc"
-STRINGS.CHARACTER_DESCRIPTIONS.beauregard = "*Walks fast\n*Hits hard\n*Always hungry for pocket bacon"
 STRINGS.CHARACTER_QUOTES.beauregard = "\"Pop pop!\""
+STRINGS.CHARACTER_DESCRIPTIONS.beauregard = "*Walks fast\n*Hits hard\n*Always hungry for pocket bacon"
 
+STRINGS.CHARACTER_NAMES.caduceus = "Caduceus"
 STRINGS.CHARACTER_TITLES.caduceus = "The Maker of Fine Graves"
-STRINGS.CHARACTER_NAMES.caduceus = "Esc"
+STRINGS.CHARACTER_QUOTES.caduceus = "\"Help, it's again.\""
 STRINGS.CHARACTER_DESCRIPTIONS.caduceus = "*Vegetarian\n*Loves mushrooms\n*Doesn't spook easily"
-STRINGS.CHARACTER_QUOTES.caduceus = "\"That's really great.\""
 
+STRINGS.CHARACTER_NAMES.caleb = "Caleb"
 STRINGS.CHARACTER_TITLES.caleb = "The Zemnian"
-STRINGS.CHARACTER_NAMES.caleb = "Esc"
-STRINGS.CHARACTER_DESCRIPTIONS.caleb = "*Knows magic spells\n*Doesn't like starting fires\n*Is squishy"
 STRINGS.CHARACTER_QUOTES.caleb = "\"Leave me alone, I'm reading.\""
+STRINGS.CHARACTER_DESCRIPTIONS.caleb = "*Knows magic spells\n*Doesn't like stray fire\n*Is squishy"
 
+STRINGS.CHARACTER_NAMES.fjord = "Fjord"
 STRINGS.CHARACTER_TITLES.fjord = "The Captain"
-STRINGS.CHARACTER_NAMES.fjord = "Esc"
-STRINGS.CHARACTER_DESCRIPTIONS.fjord = "*Doesn't like spooky things\n*Loves getting caught in the rain\n*Good at making friends"
 STRINGS.CHARACTER_QUOTES.fjord = "\"Eldriiitch bleeaast.\""
+STRINGS.CHARACTER_DESCRIPTIONS.fjord = "*Doesn't like spooky things\n*Loves getting caught in the rain\n*Good at making friends"
 
+STRINGS.CHARACTER_NAMES.jester = "Jester"
 STRINGS.CHARACTER_TITLES.jester = "The Little Sapphire"
-STRINGS.CHARACTER_NAMES.jester = "Esc"
-STRINGS.CHARACTER_DESCRIPTIONS.jester = "*Has a sweet tooth\nFights with candy!\n*Murdering cute things makes her sad"
 STRINGS.CHARACTER_QUOTES.jester = "\"Have you heard of the traveller?\""
+STRINGS.CHARACTER_DESCRIPTIONS.jester = "*Has a sweet tooth\nFights with candy!\n*Murdering cute things makes her sad"
 
+STRINGS.CHARACTER_NAMES.mollymauk = "Mollymauk"
 STRINGS.CHARACTER_TITLES.mollymauk = "The Fabulous Fool"
-STRINGS.CHARACTER_NAMES.mollymauk = "Esc"
-STRINGS.CHARACTER_DESCRIPTIONS.mollymauk = "*Not scared of much\n*Has a pretty sweet sword\n*...that uses his blood."
 STRINGS.CHARACTER_QUOTES.mollymauk = "\"Long may I reign!\""
+STRINGS.CHARACTER_DESCRIPTIONS.mollymauk = "*Not scared of much\n*Has a pretty sweet sword\n*...that uses his blood"
 
+STRINGS.CHARACTER_NAMES.nott = "Nott"
 STRINGS.CHARACTER_TITLES.nott = "The Little Goblin Girl"
-STRINGS.CHARACTER_NAMES.nott = "Esc"
-STRINGS.CHARACTER_DESCRIPTIONS.nott = "*Monsters like her\n*Booze keeps her sane...\n*...but isn't good for her"
 STRINGS.CHARACTER_QUOTES.nott = "\"You can reply to this message.\""
+STRINGS.CHARACTER_DESCRIPTIONS.nott = "*Monsters don't hate her\n*Booze keeps her sane...\n*...but isn't good for her"
 
+STRINGS.CHARACTER_NAMES.yasha = "Yasha"
 STRINGS.CHARACTER_TITLES.yasha = "The Orphanmaker"
-STRINGS.CHARACTER_NAMES.yasha = "Esc"
-STRINGS.CHARACTER_DESCRIPTIONS.yasha = "*Is super strong\n*Loves to pick flowers\n*Gets really angry"
 STRINGS.CHARACTER_QUOTES.yasha = "\"I'm learning how to people.\""
+--STRINGS.CHARACTER_QUOTES.yasha = "\"I smell like a crayon.\""
+STRINGS.CHARACTER_DESCRIPTIONS.yasha = "*Is really strong\n*Loves to pick flowers\n*Would like to rage"
 
 STRINGS.CHARACTERS.BEAUREGARD = require "speech_beauregard"
 STRINGS.CHARACTERS.CADUCEUS = require "speech_caduceus"
@@ -348,7 +358,7 @@ STRINGS.CHARACTERS.MOLLYMAUK.DESCRIBE.BLOODSWORD = "She's always hungry!"
 STRINGS.CHARACTERS.JESTER.DESCRIBE.LOLLIPOP = "Sweet and deadly...just like me!"
 STRINGS.CHARACTERS.CALEB.DESCRIBE.SCROLL_FIRE = "I shall light them up."
 STRINGS.CHARACTERS.CALEB.DESCRIBE.SCROLL_ARMOR = "Squishy wizards need extra protection."
-STRINGS.CHARACTERS.CALEB.DESCRIBE.SCROLL_LIGHTS = "A small comfort in the face of darkness."
+STRINGS.CHARACTERS.CALEB.DESCRIBE.SCROLL_LIGHTS = "Extra light for mein human eyes."
 
 table.insert(GLOBAL.CHARACTER_GENDERS.FEMALE, "beauregard")
 table.insert(GLOBAL.CHARACTER_GENDERS.MALE, "caduceus")

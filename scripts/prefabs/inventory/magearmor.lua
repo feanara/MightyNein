@@ -9,6 +9,7 @@ local assets =
 	Asset( "SHADER", shader ),
 }
 
+--#region Design: make it pretty colors!
 local max_scale = 2.5
 
 local function IntColour( r, g, b, a )
@@ -40,7 +41,11 @@ end
 local max_lifetime = 1 --0.3
 local max_particles = 20 --64
 --local ground_height = 0.1
+--#endregion Design
 
+--Don't ask me how I did this, I based it on torchlight and didn't take notes 
+--so now it's magic even to me, hope you don't have to change it
+--if you do, sorry for your luck
 local function fn(Sim)
 	local inst = CreateEntity()
 	inst:AddTag("FX")

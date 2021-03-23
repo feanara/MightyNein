@@ -41,6 +41,7 @@ local start_inv =
 	"lollipop"
 }
 
+--Lose some sanity when killing neutral/friendly things
 local function onkilled(it, data)
 	if data and data.victim and (data.victim:HasTag("prey") or data.victim:HasTag("butterfly") or data.victim:HasTag("follower")) 
 	and not data.victim:HasTag("hostile") then
@@ -48,6 +49,7 @@ local function onkilled(it, data)
 	end
 end 
 
+--#region sweets: extra health when eating sweets
 local SWEETS = {'pomegranate', 'berries', 'dragonfruit', 'watermelon', 'cave_banana', 'honey', 'butterflymuffin', 'taffy', 'pumpkincookie', 'honeynuggets', 
 				'honeyham', 'dragonpie', 'jammypreserves', 'waffles', 'powcake', 'coconut_halved', 'fruitmedley', 'taffy', 'flowersalad', 'watermelonicle',
 				'coconut_cooked', 'banana', 'sweet_potato', 'bananapop', 'sweetpotatosouffle', 'freshfruitcrepes', 'lotus_flower', 'tea', 'icedtea', 'gummy_cake'}
@@ -80,6 +82,7 @@ local function calculateFoodValues(food)
 	-- Return the results.
 	return changesweremade, healthval
 end
+--#endregion sweets
 
 local fn = function(inst)
 	

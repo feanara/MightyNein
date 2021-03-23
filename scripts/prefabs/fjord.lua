@@ -40,6 +40,7 @@ local start_inv = {}
 
 local easing = require("easing")
 
+--Override moisture functionality; he doesn't lose sanity when wet (but still gets cold)
 local function NoWetnessRate(inst)
 	local moist_dapperness = 0
 	if inst.components.moisture then
@@ -53,12 +54,14 @@ local function NoWetnessRate(inst)
 	end
 end
 
+--Followers extend their follow time because they like Fjord
 local function onbefriend(inst, follower)
 	if follower.components.follower and follower.components.follower.maxfollowtime then
 		follower.components.follower:AddLoyaltyTime(follower.components.follower.maxfollowtime * .5)
 	end
 end
 
+--Fjord can trade any hat for friendship. Loyalty value is based on the hat's dapperness
 local function ongaveitem(inst, data)
     if data.target.components.trader and data.target.components.follower and data.item.components.equippable 
 	and data.item.components.equippable.equipslot == EQUIPSLOTS.HEAD then

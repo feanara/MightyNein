@@ -42,10 +42,7 @@ local start_inv =
 {
 }
 
---local function onscrollread(inst, data)
---	if data and data.components.spellscroll and 
---end
-
+--Sanity hit when something is on fire (excluding torches, campfires, and fire pits)
 local function sanityfn(inst)
 	local x,y,z = inst.Transform:GetWorldPosition()	
 	local delta = 0

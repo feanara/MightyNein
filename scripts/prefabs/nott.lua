@@ -43,6 +43,7 @@ local start_inv =
 	"flask"
 }
 
+--Nott must keep her monster tag when removing the spider hat
 local function fnUnequip(inst, item)
 	if item and item.prefab == "spiderhat" then inst:AddTag("monster") end
 end
@@ -60,20 +61,15 @@ local fn = function(inst)
 	-- Stats	
 	inst.components.health:SetMaxHealth(175)
 	inst.components.hunger:SetMax(150)
-	-- LOW SANITY MAX
+	-- LOW SANITY
 	inst.components.sanity:SetMax(125)
 	
-	-- Damage multiplier (optional)
     inst.components.combat.damagemultiplier = 1
-	
-	-- Hunger rate (optional)
 	inst.components.hunger.hungerrate = 1 * TUNING.WILSON_HUNGER_RATE
-
-	-- Movement speed (optional)
 	inst.components.locomotor.walkspeed = 4
 	inst.components.locomotor.runspeed = 6
 	
-	--NEUTRAL ENEMIES
+	--NEUTRAL TO MONSTERS
 	inst:AddTag("monster")
 	inst.components.eater.monsterimmune = true
 	inst:ListenForEvent("unequippeditem", fnUnequip)

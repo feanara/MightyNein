@@ -45,6 +45,7 @@ local function fn(Sim)
     inst.Light:SetIntensity(0)
     inst.components.fader:Fade(0, INTENSITY, 3+math.random()*2, function(v) inst.Light:SetIntensity(v) end, function() end)
 	
+	--Fade out when day starts
     inst:ListenForEvent( "daytime", function()
         inst:DoTaskInTime(2+math.random()*1, function() fadeout(inst) end)
     end, GetWorld())

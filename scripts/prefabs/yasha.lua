@@ -14,6 +14,7 @@ local assets = {
 local prefabs = {}
 local start_inv = {}
 
+--#region Rage
 local function onattack(inst, data)
 	print('Current Rage: '..inst.components.rage:GetDebugString())
 	if inst.components.rage:IsRaging() then
@@ -114,6 +115,7 @@ local function LoseRage(inst)
 		--GetWorld().components.colourcubemanager:SetOverrideColourCube(nil)
 	end
 end
+--#endregion Rage
 
 
 --EXTRA SANITY FOR FLOWERS
