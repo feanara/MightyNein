@@ -11,7 +11,7 @@ Tutorials and References
 Please check these out if you’re new to DS modding or LUA in general
 
 Lua manual
-  o	http://www.lua.org/manual/5.1/manual.html
+  - http://www.lua.org/manual/5.1/manual.html
 
 Don’t Starve mods and tools forum: 
  - https://forums.kleientertainment.com/forums/forum/26-dont-starve-mods-and-tools/ 
