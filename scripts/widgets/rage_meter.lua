@@ -16,20 +16,6 @@ local RageMeter = Class(Widget, function(self, owner)
 	self.anim:GetAnimState():SetBuild("rage_meter")
 	self.anim:SetClickable(false)
 
-	--self.arrow = self.anim:AddChild(UIAnim())
-	--self.arrow:GetAnimState():SetBank("sanity_arrow")
-	--self.arrow:GetAnimState():SetBuild("sanity_arrow")
-	--self.arrow:GetAnimState():PlayAnimation("neutral")
-	--self.arrow:SetClickable(false)
-
-    --self.underNumber = self:AddChild(Widget("undernumber"))
-
-    --self.num = self:AddChild(Text(BODYTEXTFONT, 33))
-    --self.num:SetHAlign(ANCHOR_MIDDLE)
-    --self.num:SetPosition(5, 0, 0)
-	--self.num:SetClickable(false)
-    
-    --self.num:Hide()
 	self:StartUpdating()
 end)
 
@@ -48,49 +34,16 @@ function RageMeter:Deactivate()
 		self.animTask = nil
 	end
 	self.anim:GetAnimState():PlayAnimation("close")
+	self.active = false
 end
 
 function RageMeter:OnGainFocus()
 	RageMeter._base:OnGainFocus(self)
-	--self.num:Show()
 end
 
 function RageMeter:OnLoseFocus()
 	RageMeter._base:OnLoseFocus(self)
-	--self.num:Hide()
 end
-
---function RageMeter:UpdateArrowAnim(value)
-	--local small_down = 1
-	--local med_down = 6
-	--local large_down = 10
-	--local small_up = 1
-	--local med_up = 3
-	--local large_up = 5
-	--local anim = "neutral"
-	--if value > 0 and self.rage < self.max then
-	--	if value > large_up then
-	--		anim = "arrow_loop_increase_most"
-	--	elseif value > med_up then
-	--		anim = "arrow_loop_increase_more"
-	--	elseif value > small_up then
-	--		anim = "arrow_loop_increase"
-	--	end
-	--elseif value < 0 and self.rage > 0 then
-	--	if value < -large_down then
-	--		anim = "arrow_loop_decrease_most"
-	--	elseif value < -med_down then
-	--		anim = "arrow_loop_decrease_more"
-	--	elseif value < -small_down then
-	--		anim = "arrow_loop_decrease"
-	--	end
-	--end
-	--
-	--if anim and self.arrowdir ~= anim then
-	--	self.arrowdir = anim
-	--	self.arrow:GetAnimState():PlayAnimation(anim, true)
-	--end
---end
 
 function RageMeter:OnUpdate(dt)
 	local newRage = self.owner.components.rage.current
@@ -106,9 +59,6 @@ function RageMeter:OnUpdate(dt)
 			self:Deactivate()
 		end
 	end
-
-	--self.num:SetString(tostring(math.ceil(newRage)))
-	--self:UpdateArrowAnim(newRage-oldRage)
 end
 
 return RageMeter

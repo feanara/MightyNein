@@ -8,3 +8,6 @@ convert anim to individual files (get the anim.bin from E:\Games\Steam\steamapps
 "C:\Users\emily\OneDrive\Desktop\dsmn\ktools-4.4.4\krane.exe" "C:\Users\emily\OneDrive\Desktop\dsmn\anim\ghost_wendy_build\anim.bin" "C:\Users\emily\OneDrive\Desktop\dsmn\anim\ghost_wendy_build\build.bin" "C:\Users\emily\OneDrive\Desktop\dsmn\anim\ghost_wendy_build"
 
 "D:\Games\Steam\steamapps\common\Don't Starve Mod Tools\mod_tools\png.exe" "C:\Users\emily\OneDrive\Desktop\dsmn\scroll_armor.png" "C:\Users\emily\OneDrive\Desktop\dsmn"
+
+
+"E:\Games\Steam\steamapps\common\Don't Starve Mod Tools\mod_tools/png.exe" "E:\Games\Steam\steamapps\common\dont_starve\mods\MightyNein\images\inventoryimages/bloodsword.png"  "E:\Games\Steam\steamapps\common\dont_starve\mods\MightyNein\images\inventoryimages"
